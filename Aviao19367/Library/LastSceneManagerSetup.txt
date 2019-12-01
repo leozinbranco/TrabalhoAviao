@@ -1,0 +1,7 @@
+sceneSetups:
+- path: Assets/Scenes/Cena01.unity
+  isLoaded: 1
+  isActive: 1
+- path: Assets/Scenes/cenaGanhou.unity
+  isLoaded: 1
+  isActive: 0

@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Inimigo
+  - tiroInimigo
+  - tiroAviao
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - PostProcessing
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Fundo
+    uniqueID: 4247900309
+    locked: 0
+  - name: Aviao
+    uniqueID: 4023758215
+    locked: 0
+  - name: TiroAviao
+    uniqueID: 688593867
+    locked: 0
+  - name: Inimigos
+    uniqueID: 133220489
+    locked: 0
+  - name: TiroInimigo
+    uniqueID: 2170252629
+    locked: 0
+  - name: Explosao
+    uniqueID: 2635688075
+    locked: 0

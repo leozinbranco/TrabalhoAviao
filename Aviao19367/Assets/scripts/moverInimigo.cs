@@ -35,17 +35,17 @@ public class moverInimigo : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D outro)
     {
-            #if UNITY_ANDROID || UNITY_WP8
+#if UNITY_ANDROID || UNITY_WP8
                                                 if(Input.GetKeyDown(KeyCode.Escape))
                                                     Application.Quit();
-            #endif
-
+#endif
+        Debug.Log("Entrou no Trigger do Mover Inimigo.");
         if (outro.tag == "tiroAviao")
-        { 
-         
+        {
+            
             AudioSource.PlayClipAtPoint(somDeExplosao, new Vector3(0, 0, 0), 20);
-            StaticGameController.removerTiros(outro.gameObject);
-            StaticGameController.desativarInimigo(gameObject);
+            StaticGameController.desativarInimigo(gameObject, outro.gameObject);
+            StaticGameController.removerTiros(outro.gameObject);          
 
 #if UNITY_ANDROID
                                         Handheld.Vibrate();

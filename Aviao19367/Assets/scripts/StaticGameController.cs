@@ -37,7 +37,6 @@ public static class StaticGameController {
                 inimigo.transform.position = new Vector3(posicaoX, 10f, 1f);
                 inimigo.SetActive(true);
                 inimigo.GetComponent<Renderer>().enabled = true;
-                StaticGameController.listaInimigo[i] = inimigo;
                 break;
             }
     }
@@ -57,17 +56,16 @@ public static class StaticGameController {
         }
     }
 
-    public static void desativarInimigo(GameObject outro)
+    public static void desativarInimigo(GameObject inimigo, GameObject tiro)
     {
-        for(int i = 0; i < MaxInimigos; i++)
+        for (int i = 0; i < MaxInimigos; i++)
         {
-            if(listaInimigo[i].name == outro.name)
+            
+            if (listaInimigo[i].name == inimigo.name)
             {
-                Debug.Log("Inimigo Desativado por colisão" + outro.name);
+                Debug.Log(inimigo.name + " desativado por colisao com " + tiro.name);
                 listaInimigo[i].SetActive(false);
-                outro.gameObject.SetActive(false);
-                listaInimigo[i].GetComponent<Renderer>().enabled = false;
-                listaInimigo.RemoveAt(i);
+                tiro.gameObject.SetActive(false); //listaInimigo[i].GetComponent <Renderer>().enabled = false;
                 break;
             }
         }
@@ -88,7 +86,7 @@ public static class StaticGameController {
             if(qualTiro.transform.position.y < -4.5f)
             {
                 listaTiroInimigo[i].SetActive(false);
-                qualTiro.SetActive(qualTiro);
+                qualTiro.SetActive(false);
                 qualTiro.GetComponent<Renderer>().enabled = false;
                 listaTiroInimigo.RemoveAt(i);
             }
@@ -157,6 +155,7 @@ public static class StaticGameController {
     public static void moverTiros(float velocidade)
     {
         foreach (GameObject tiro in listaTiroAviao)
+            if(tiro.activeInHierarchy)
             tiro.transform.position = new Vector3(tiro.transform.position.x,
                                     tiro.transform.position.y + velocidade * Time.deltaTime,
                                    tiro.transform.position.z);

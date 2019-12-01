@@ -11,11 +11,24 @@ public class moverAviao : MonoBehaviour {
     private bool colidindo = false;
     public float velocidadeTiroAviao = 4f;
     public float taxaDeTiros = 0.05f;
-    private float proximoTiro = 0.0f;
+    private float proximoTiro = 0.05f;
     public int maxInimigos = 10;
+    public float velocidadeDoAviao = 3.0f;
     public GameObject prefabInimigo;
+    public float taxaSpawnInimigos = 2;
+    public float xMaximo = 4, xMinimo = -4;
+    private float taxaSpawnAtual;
+    
 
-    float velocidadeDoAviao = 4.0f;
+
+    void Start()
+    {
+        StaticGameController.listaInimigo = new List<GameObject>();
+        StaticGameController.listaTiroInimigo = new List<GameObject>();
+        StaticGameController.listaTiroAviao = new List<GameObject>();
+        StaticGameController.criarListaInimigos(prefabInimigo, maxInimigos);
+    }
+
     void tratarSetasDeDirecao(GameObject aviao)
     {
         float eixoHorizontal = Input.GetAxis("Horizontal");
@@ -52,20 +65,13 @@ public class moverAviao : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D outro)
     {
-            #if UNITY_ANDROID || UNITY_WP8
-            #endif
-        if (outro.tag == "Inimigo")
+  
+        if (outro.tag == "Inimigo" && this.tag == "Player")
         {
-            if (colidindo)
-                return;
+            Debug.Log("Entrou no colider DO AVIAO");
             colidindo = true;
             AudioSource.PlayClipAtPoint(somDeExplosao, new Vector3(1, 1, 1), 20);
-
-            #if UNITY_ANDROID
-                                        Handheld.Vibrate();
-            #endif
-
-            StaticGameController.desativarInimigo(outro.gameObject);
+        
             if (gameObject.tag == "tiroAviao")
                 StaticGameController.removerTiros(gameObject);
         }
@@ -75,23 +81,14 @@ public class moverAviao : MonoBehaviour {
     }
 
 
-    public float taxaSpawnInimigos = 2;
-    public float xMaximo = 4, xMinimo = -4;
-    private float taxaSpawnAtual;
-	// Use this for initialization
-	void Start () {
-        StaticGameController.listaInimigo = new List<GameObject>();
-        StaticGameController.listaTiroInimigo = new List<GameObject>();
-        StaticGameController.listaTiroAviao = new List<GameObject>();
-        StaticGameController.criarListaInimigos(prefabInimigo, maxInimigos);
-    }
+    
 
     void verificarCriacaoDeInimigos()
     {
         taxaSpawnAtual += Time.deltaTime;
-        if(taxaSpawnAtual > taxaSpawnInimigos)
+        if(Time.time > taxaSpawnAtual)
         {
-            taxaSpawnAtual = 0;
+            taxaSpawnAtual = Time.time + taxaSpawnInimigos;
             StaticGameController.SpawnInimigos(xMinimo, xMaximo);
         }
     }
@@ -103,16 +100,22 @@ public class moverAviao : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.Escape))
                 Application.Quit();
 #endif
-
+        verificarCriacaoDeInimigos();
+        StaticGameController.moverTiros(3f);
         if (gameObject.tag == "Player")
         {
+            //Debug.Log("Entrou na tag Player");
             tratarSetasDeDirecao(gameObject);
 
             bool criarTiro = false;
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space) && Time.time > proximoTiro)
+            {
                 criarTiro = true;
+                proximoTiro = Time.time + taxaDeTiros;
+            }
 
-            if(Input.GetButton("Fire1") && Time.time > proximoTiro)
+
+            if (Input.GetButton("Fire1") && Time.time > proximoTiro)
             {
                 criarTiro = true;
                 proximoTiro = Time.time + taxaDeTiros;
@@ -120,15 +123,19 @@ public class moverAviao : MonoBehaviour {
 
             if (criarTiro)
                 StaticGameController.criarTiro(gameObject, prefabTiroAviao);
+        }
 
-            if(Input.touchCount == 1)
-            {
-                Touch toque = Input.GetTouch(0);
-                if (toque.phase == TouchPhase.Began)
-                    StaticGameController.criarTiro(gameObject, prefabTiroAviao);
-            }
+        if (gameObject.tag == "Player")
+        {
 
-            verificarCriacaoDeInimigos();
+            //if (Input.touchCount == 1)
+            //{
+            //    Touch toque = Input.GetTouch(0);
+            //    if (toque.phase == TouchPhase.Began)
+            //        StaticGameController.criarTiro(gameObject, prefabTiroAviao);
+            //}
+
+            //verificarCriacaoDeInimigos();
             Vector3 aceleracao = Input.acceleration;
             if (Mathf.Abs(aceleracao.x) > 0.5f)
             {
@@ -148,7 +155,7 @@ public class moverAviao : MonoBehaviour {
                     if (transform.position.y < -3.9f)
                     transform.position = new Vector3(transform.position.x, -3.9f, transform.position.z);
             }
-            StaticGameController.moverTiros(velocidadeTiroAviao);
+            
             tratarSetasDeDirecao(gameObject);
         }
 	}

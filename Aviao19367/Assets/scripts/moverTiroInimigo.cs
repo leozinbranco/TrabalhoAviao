@@ -9,6 +9,7 @@ public class moverTiroInimigo : MonoBehaviour
     void Update()
     {
         if (gameObject.tag == "tiroInimigo")
+            //Debug.Log("Entrou na tag tiroInimigo");
             StaticGameController.moverTirosInimigos(velocidadeTiroInimigo);
     }
 }

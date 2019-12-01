@@ -279,6 +279,7 @@ MonoBehaviour:
   velocidadeTiroAviao: 4
   taxaDeTiros: 0.05
   maxInimigos: 10
+  velocidadeDoAviao: 3
   prefabInimigo: {fileID: 6840717207770379998, guid: fa41ce6b6c7c7e9408bb7fc76cf0a539,
     type: 3}
   taxaSpawnInimigos: 2
@@ -353,18 +354,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6774652991942628056, guid: fa41ce6b6c7c7e9408bb7fc76cf0a539,
         type: 3}
-      propertyPath: m_SortingLayerID
-      value: 133220489
-      objectReference: {fileID: 0}
-    - target: {fileID: 6774652991942628056, guid: fa41ce6b6c7c7e9408bb7fc76cf0a539,
-        type: 3}
       propertyPath: m_SortingLayer
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1478259524243882608, guid: fa41ce6b6c7c7e9408bb7fc76cf0a539,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa41ce6b6c7c7e9408bb7fc76cf0a539, type: 3}
